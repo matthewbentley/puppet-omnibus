@@ -28,9 +28,9 @@ OS_SOURCES = {
   'centos5' => 'docker-dev.yelpcorp.com/centos5_yelp:latest',
   'centos6' => 'docker-dev.yelpcorp.com/centos6_yelp:latest',
   'hardy'   => 'docker-dev.yelpcorp.com/hardy_yelp:latest',
-  'lucid'   => 'docker-dev.yelpcorp.com/hardy_lucid:latest',
-  'precise' => 'docker-dev.yelpcorp.com/hardy_precise:latest',
-  'trusty'  => 'docker-dev.yelpcorp.com/hardy_trusty:latest'
+  'lucid'   => 'docker-dev.yelpcorp.com/lucid_yelp:latest',
+  'precise' => 'docker-dev.yelpcorp.com/precise_yelp:latest',
+  'trusty'  => 'docker-dev.yelpcorp.com/trusty_yelp:latest'
 }
 
 from OS_SOURCES[env_os]
