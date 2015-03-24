@@ -46,11 +46,11 @@ c6_packages = rpm_packages + %w{
   autoconf git-1.7.1 libvirt libvirt-devel passwd glibc-headers glibc-common glibc}
 
 if env_os == 'centos5'
-  run %Q{ yum clean metadata && yum install #{c5_packages.sort.join(' ')} -y }
+  run %Q{ yum install #{c5_packages.sort.join(' ')} -y }
   run %Q{ rpm -Uvh ftp://ftp.pbone.net/mirror/dl.iuscommunity.org/pub/ius/archive/Redhat/5/i386/autoconf26x-2.63-4.ius.el5.noarch.rpm }
 end
 
-run "yum clean metadata && yum install #{c6_packages.sort.join(' ')} -y" if env_os == 'centos6'
+run "yum install #{c6_packages.sort.join(' ')} -y" if env_os == 'centos6'
 
 run %Q{
   echo 'deb http://ppa.launchpad.net/git-core/ppa/ubuntu lucid main' >> /etc/apt/sources.list
