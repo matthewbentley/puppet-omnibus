@@ -21,5 +21,16 @@ ARGV << "--vardir" << "/var/lib/puppetmaster"
 
 require 'puppet/util/command_line'
 
-run Puppet::Util::CommandLine.new.execute
+class EnvironmentMiddleware
+  def initialize(app)
+    @app = app
+  end
 
+  def call(env)
+    ENV['HTTP_X_FORWARDED_FOR'] = env['HTTP_X_FORWARDED_FOR']
+    @app.call(env)
+  end
+end
+
+use EnvironmentMiddleware
+run Puppet::Util::CommandLine.new.execute
