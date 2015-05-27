@@ -1,7 +1,7 @@
 # Make sure repository has either tag or branch(not both!) named "VERSION.ITERATION"
 PUPPET_GIT   = ENV["upstream_puppet_git"] || "git://github.com/Yelp/puppet.git"
-VERSION      = "3.7.5"
-ITERATION    = "y5"
+VERSION      = "3.8.1"
+ITERATION    = "y1"
 
 PACKAGE_NAME = "puppet-omnibus"
 BUILD_NUMBER = ENV["upstream_build_number"] || 0
@@ -69,6 +69,7 @@ OS_BUILDS.each do |os|
       unbuffer docker run -t -i \
         -e BUILD_NUMBER=#{BUILD_NUMBER} \
         -e PUPPET_VERSION=#{VERSION}.#{ITERATION} \
+        -e PUPPET_BASE=#{VERSION} \
         -e HOME=/package \
         -u jenkins \
         -v #{CURDIR}:/package_source:ro \

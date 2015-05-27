@@ -24,6 +24,7 @@ What are Omnibus packages?
 built in Ruby, written by the Opscode folks. It was created to build monolithic
 packages for Chef (which requires Ruby as well). Rather than re-inventing the
 packaging wheel, it makes use of Jordan Sissel's
+
 [fpm](https://github.com/jordansissel/fpm) to build the final package.
 
 The first version of this project used Opscode's tool, but they didn't seem to
@@ -47,11 +48,7 @@ support RHEL/Centos etc without needing EPEL.
 Available builds
 ----------------
 
-There are two recipes available - `recipe-aws.rb`, which includes some gems to
-support Puppet types that make use of AWS resources, and `recipe.rb`, for people
-not using AWS.
-
-The following gems are built into both recipes:
+The following gems are built:
 - facter
 - json\_pure
 - hiera
@@ -63,8 +60,7 @@ The following gems are built into both recipes:
 - puppet
 - unicorn
 - serverspec
-
-The following extra gems are included in the `recipe-aws.rb` build:
+- msgpack
 - aws-sdk
 - fog
 
