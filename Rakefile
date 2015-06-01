@@ -6,11 +6,11 @@ ITERATION    = "y1"
 PACKAGE_NAME = "puppet-omnibus"
 BUILD_NUMBER = ENV["upstream_build_number"] || 0
 CURDIR       = Dir.pwd
-OS_BUILDS    = %w(hardy lucid precise trusty centos5 centos6)
+OS_BUILDS    = %w(lucid precise trusty centos5 centos6)
 
 def package_name_suffix(os)
   case os
-  when "hardy", "lucid", "precise", "trusty"
+  when "lucid", "precise", "trusty"
     "_#{VERSION}+yelp-#{BUILD_NUMBER}_amd64.deb"
   when /centos/
     "-#{VERSION}.yelp_#{BUILD_NUMBER}-1.x86_64.rpm"

@@ -27,7 +27,6 @@
 OS_SOURCES = {
   'centos5' => 'docker-dev.yelpcorp.com/centos5_yelp:latest',
   'centos6' => 'docker-dev.yelpcorp.com/centos6_yelp:latest',
-  'hardy'   => 'docker-dev.yelpcorp.com/hardy_yelp:latest',
   'lucid'   => 'docker-dev.yelpcorp.com/lucid_yelp:latest',
   'precise' => 'docker-dev.yelpcorp.com/precise_yelp:latest',
   'trusty'  => 'docker-dev.yelpcorp.com/trusty_yelp:latest'
@@ -63,12 +62,6 @@ packages['deb']     = %w{
   pkg-config screen sudo wget zlib1g zlib1g-dev
   git-core libxml2-dev ruby gawk }
 
-# hardy zlib1g goes crazy
-packages['hardy']   = packages['deb'] - %w{zlib1g zlib1g-dev git-core} +
-                        %w{ libreadline5-dev libffi4-dev
-                            zlib1g=1:1.2.3.3.dfsg-7ubuntu1
-                            zlib1g-dev=1:1.2.3.3.dfsg-7ubuntu1
-                            git-core=1.7.4-yelp1 }
 packages['tpl']     = packages['deb'] + %w{libffi6 libffi-dev libreadline6 libreadline6-dev}
 packages['lucid']   = packages['tpl'] - %w{libffi6} + %w{libffi5}
 packages['precise'] = packages['trusty'] = packages['tpl']
@@ -77,7 +70,7 @@ run %Q{
   rm -f /etc/dpkg/dpkg.cfg.d/02apt-speedup
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install #{packages[env_os].sort.join(' ')} --yes --force-yes --fix-missing
-} if %w{trusty precise lucid hardy}.include? env_os
+} if %w{trusty precise lucid}.include? env_os
 
 # user jenkins
 
@@ -98,7 +91,7 @@ run %Q{
   chsh -s /bin/bash jenkins
   rm -f /bin/sh
   ln -s /bin/bash /bin/sh
-} if %w{hardy lucid precise trusty}.include? env_os
+} if %w{lucid precise trusty}.include? env_os
 
 puppet_file = env_os =~ /centos/ ? "/etc/sysconfig/puppet" : "/etc/default/puppet"
 run %Q{
