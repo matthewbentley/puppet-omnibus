@@ -11,3 +11,4 @@ cache/*
 .*docker_is_created
 dist/
 dockerfiles/*
+puppet-git/

@@ -33,7 +33,7 @@ OS_SOURCES = {
 }
 
 from OS_SOURCES[env_os]
-
+env "DEBIAN_FRONTEND=noninteractive"
 # packages
 
 rpm_packages = %w{
@@ -47,13 +47,9 @@ c6_packages = rpm_packages + %w{
 if env_os == 'centos5'
   run %Q{ yum install #{c5_packages.sort.join(' ')} -y }
   run %Q{ rpm -Uvh ftp://ftp.pbone.net/mirror/dl.iuscommunity.org/pub/ius/archive/Redhat/5/i386/autoconf26x-2.63-4.ius.el5.noarch.rpm }
+elsif env_os == 'centos6'
+  run "yum install #{c6_packages.sort.join(' ')} -y"
 end
-
-run "yum install #{c6_packages.sort.join(' ')} -y" if env_os == 'centos6'
-
-run %Q{
-  echo 'deb http://ppa.launchpad.net/git-core/ppa/ubuntu lucid main' >> /etc/apt/sources.list
-} if env_os == 'lucid'
 
 packages = {}
 packages['deb']     = %w{
@@ -68,8 +64,8 @@ packages['precise'] = packages['trusty'] = packages['tpl']
 
 run %Q{
   rm -f /etc/dpkg/dpkg.cfg.d/02apt-speedup
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install #{packages[env_os].sort.join(' ')} --yes --force-yes --fix-missing
+  apt-get -qq update && \
+  apt-get -qq install #{packages[env_os].sort.join(' ')} --force-yes
 } if %w{trusty precise lucid}.include? env_os
 
 # user jenkins
@@ -111,4 +107,3 @@ run %Q{
     cat /tmp/ruby-2.1.2-patches/* | /tmp/ruby-build-20140524/bin/ruby-build -p 2.1.2 /opt/puppet-omnibus/embedded && \
   chown -R jenkins: /opt/puppet-omnibus
 }
-
