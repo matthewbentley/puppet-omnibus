@@ -59,7 +59,7 @@ class Nginx < FPM::Cookery::Recipe
 #      :http_uwsgi_temp_path       => '/var/lib/nginx/tmp/uwsgi',
 #      :http_scgi_temp_path        => '/var/lib/nginx/tmp/scgi'
 
-    make
+    make '--quiet'
   end
 
   def install
