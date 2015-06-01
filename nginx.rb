@@ -34,7 +34,7 @@ class Nginx < FPM::Cookery::Recipe
     configure \
       '--with-http_stub_status_module',
       '--with-http_ssl_module',
-      '--without-pcre',
+      '--with-pcre',
       '--without-http_rewrite_module',
       '--with-file-aio',
       '--with-http_realip_module',
@@ -84,7 +84,7 @@ class Nginx < FPM::Cookery::Recipe
     #system 'gzip', man8/'nginx.8'
 
     # support dirs
-    %w( var var/lock  var/tmp ).map do |dir|
+    %w( var var/lock  var/tmp var/cache var/cache/nginx ).map do |dir|
       destdir(dir).mkpath
     end
   end
