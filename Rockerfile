@@ -96,14 +96,24 @@ run %Q{
   chown jenkins: /opt /nail /package /etc/puppet /var/lib/puppet /var/cache/omnibus #{puppet_file}
 }
 
-# ruby2.1.2
+run %Q{
+  echo 'gem: --no-document' > /etc/gemrc && \
+  echo 'install: --no-ri --no-rdoc' >> /etc/gemrc && \
+  echo 'update: --no-ri --no-rdoc' >> /etc/gemrc && \
+  cp /etc/gemrc /package/.gemrc && \
+  cp /etc/gemrc /home/jenkins/.gemrc
+}
 
+# ruby2.1.2
 add "ruby-build-20140524.tar.gz /tmp"
 add "ruby-2.1.2-patches.tar.gz /tmp"
 run %Q{
   mkdir -p /opt/puppet-omnibus/embedded && \
-  MAKE_OPTS=-j1 RUBY_CFLAGS=-Os RUBY_BUILD_CACHE_PATH=/tmp \
-    RUBY_CONFIGURE_OPTS="--without-gdbm --without-dbm --disable-install-doc --without-tcl --without-tk" \
-    cat /tmp/ruby-2.1.2-patches/* | /tmp/ruby-build-20140524/bin/ruby-build -p 2.1.2 /opt/puppet-omnibus/embedded && \
-  chown -R jenkins: /opt/puppet-omnibus
+  export MAKE_OPTS="-j3 -s" && \
+  export RUBY_CFLAGS=-Os && \
+  export RUBY_BUILD_CACHE_PATH=/tmp && \
+  export RUBY_CONFIGURE_OPTS="--without-gdbm --without-dbm --disable-install-doc --without-tcl --without-tk" && \
+  cat /tmp/ruby-2.1.2-patches/* | /tmp/ruby-build-20140524/bin/ruby-build -p 2.1.2 /opt/puppet-omnibus/embedded && \
+  chown -R jenkins: /opt/puppet-omnibus && \
+  rm -rf /opt/puppet-omnibus/embedded/share/*
 }

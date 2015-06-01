@@ -30,7 +30,7 @@ class Libaugeas < FPM::Cookery::Recipe
               'enable-shared' => true,
               'disable-install-doc' => true,
               'with-opt-dir' => destdir
-    make
+    make '-s'
   end
 
   def install
