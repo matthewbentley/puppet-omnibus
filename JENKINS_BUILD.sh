@@ -24,8 +24,8 @@ ln -s /package/puppet-git $PUPPET_BUILDPATH # versioning here because of hardy
 ls -la $PUPPET_BUILDPATH
 cd $PUPPET_BUILDPATH
 git checkout -q $PUPPET_VERSION
-rake package:bootstrap > /dev/null
-rake package:gem > /dev/null
+rake package:bootstrap -q
+rake package:gem -q
 mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 
 # build omnibus package
