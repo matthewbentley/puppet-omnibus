@@ -7,6 +7,8 @@ itest_precise:
 	rake itest_precise
 itest_trusty:
 	rake itest_trusty
+itest_xenial:
+	rake itest_xenial
 itest_centos5:
 	rake itest_centos5
 itest_centos6:
