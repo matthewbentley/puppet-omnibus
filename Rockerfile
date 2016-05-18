@@ -29,7 +29,8 @@ OS_SOURCES = {
   'centos6' => 'docker-dev.yelpcorp.com/centos6_yelp:latest',
   'lucid'   => 'docker-dev.yelpcorp.com/lucid_yelp:latest',
   'precise' => 'docker-dev.yelpcorp.com/precise_yelp:latest',
-  'trusty'  => 'docker-dev.yelpcorp.com/trusty_yelp:latest'
+  'trusty'  => 'docker-dev.yelpcorp.com/trusty_yelp:latest',
+  'xenial'  => 'docker-dev.yelpcorp.com/xenial_yelp:latest'
 }
 
 from OS_SOURCES[env_os]
@@ -60,13 +61,13 @@ packages['deb']     = %w{
 
 packages['tpl']     = packages['deb'] + %w{libffi6 libffi-dev libreadline6 libreadline6-dev}
 packages['lucid']   = packages['tpl'] - %w{libffi6} + %w{libffi5}
-packages['precise'] = packages['trusty'] = packages['tpl']
+packages['precise'] = packages['trusty'] = packages['xenial'] = packages['tpl']
 
 run %Q{
   rm -f /etc/dpkg/dpkg.cfg.d/02apt-speedup
   apt-get -qq update && \
   apt-get -qq install #{packages[env_os].sort.join(' ')} --force-yes
-} if %w{trusty precise lucid}.include? env_os
+} if %w{xenial trusty precise lucid}.include? env_os
 
 # user jenkins
 
@@ -87,7 +88,7 @@ run %Q{
   chsh -s /bin/bash jenkins
   rm -f /bin/sh
   ln -s /bin/bash /bin/sh
-} if %w{lucid precise trusty}.include? env_os
+} if %w{lucid precise trusty xenial}.include? env_os
 
 puppet_file = env_os =~ /centos/ ? "/etc/sysconfig/puppet" : "/etc/default/puppet"
 run %Q{
