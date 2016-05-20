@@ -8,7 +8,7 @@ gem 'json',                   '1.8.3'
 gem 'hiera',                  '3.0.1'
 gem 'deep_merge',             '1.0.1'
 gem 'rgen',                   '0.6.6'
-gem 'ruby-augeas',            '0.4.1'
+#gem 'ruby-augeas',            '0.4.1'
 gem 'ruby-shadow',            '2.2.0'
 gem 'gpgme',                  '2.0.10'
 gem 'highline',               '1.6.19'     # Ruby
@@ -18,7 +18,7 @@ gem 'rack',                   '1.6.4'
 gem 'unicorn',                '4.9.0'
 
 group :centos_6 do
-  gem 'ruby-libvirt',         '0.4.0'
+  #  gem 'ruby-libvirt',         '0.4.0'
 end
 
 gem 'msgpack',                '0.6.2' # Apache v2
